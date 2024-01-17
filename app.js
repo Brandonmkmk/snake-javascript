@@ -6,10 +6,11 @@ let posY = 1;
 
 let direction = 1;
 const backgroundSounds = new Audio('./embrace-12278.mp3')
-const eatSund = new Audio('')
+const eatSound = new Audio('./munching-food-73994.mp3')
+const death = new Audio('./natural-thunder-113219.mp3')
 function init(){
     backgroundSounds.play()
-     posX = 0;
+     posX = 2;
      posY = 1;
      direction = 1;
     const snake = [];
@@ -78,6 +79,7 @@ let snake = init()
             if (snake[0].x === food.x && snake[0].y === food.y){
                 snake.push({ ...snake[1] });
                 food.random();
+                eatSound.play()
             }
         }
 
@@ -92,7 +94,7 @@ function gameOver(){
     }
 }
 
-let lost = gameOver()
+
 
 food.random();
 setInterval(() => {
@@ -101,11 +103,11 @@ setInterval(() => {
     food.pinta();
     snake.forEach((item)=>item.pinta())
     checkEat()
-//   if(lost){
-//     alert('estas perdiendo')
-//     snake = init()
-//     return
-//   }
+  if(gameOver()){
+    death.play()
+    snake = init()
+    return
+  }
     
     snake.forEach(item => item.pinta());
 
